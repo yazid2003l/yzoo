@@ -9,104 +9,158 @@
   <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
   <style>
+    :root {
+      --main-gradient: linear-gradient(120deg, #6e8efb 0%, #a777e3 100%);
+      --main-color: #6e8efb;
+      --accent-color: #a777e3;
+      --bg-light: #f7f7fa;
+      --white: #fff;
+      --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+      --radius: 18px;
+      --transition: 0.25s cubic-bezier(.4,2,.6,1);
+    }
     body {
       font-family: 'Cairo', Arial, sans-serif;
-      background: linear-gradient(135deg, #e0e7ff 0%, #f7f7fa 100%);
+      background: var(--main-gradient);
       min-height: 100vh;
       margin: 0;
       display: flex;
-      align-items: center;
-      justify-content: center;
       flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+    }
+    header {
+      width: 100vw;
+      background: var(--main-gradient);
+      color: var(--white);
+      padding: 2rem 0 1.2rem 0;
+      text-align: center;
+      box-shadow: 0 2px 16px #6e8efb22;
+      margin-bottom: 0.5rem;
+    }
+    header .icon {
+      width: 60px;
+      margin-bottom: 0.5rem;
+      filter: drop-shadow(0 2px 6px #0001);
+    }
+    header h1 {
+      font-size: 2.2rem;
+      font-weight: 800;
+      margin: 0.2rem 0 0.5rem 0;
+      letter-spacing: 1px;
+    }
+    header p {
+      font-size: 1.1rem;
+      opacity: 0.92;
+      margin: 0;
     }
     .container {
-      background: #fff;
-      padding: 2.5rem 2.5rem 2rem 2.5rem;
-      border-radius: 18px;
-      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-      max-width: 370px;
+      background: var(--white);
+      padding: 2.2rem 2.2rem 1.5rem 2.2rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      max-width: 410px;
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: box-shadow 0.2s;
+      margin-bottom: 2rem;
+      animation: fadeIn 1s;
     }
-    .container:hover {
-      box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.22);
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    .icon {
-      width: 60px;
-      margin-bottom: 1rem;
-      filter: drop-shadow(0 2px 6px #0001);
+    form {
+      width: 100%;
+      margin-top: 1rem;
     }
-    h1 {
-      color: #2d3a4b;
-      text-align: center;
+    .input-group {
       margin-bottom: 1.2rem;
-      font-size: 2rem;
-      font-weight: 700;
-      letter-spacing: 1px;
+      position: relative;
     }
-    label {
-      display: block;
-      margin-bottom: 0.4rem;
+    .input-group label {
       color: #3a3a3a;
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 1.08rem;
+      margin-bottom: 0.4rem;
+      display: block;
+      margin-right: 2.2rem;
+    }
+    .input-icon {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--main-color);
+      font-size: 1.2rem;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    select, input[type="date"], input[type="number"] {
+      width: 100%;
+      padding: 0.8rem 2.2rem 0.8rem 0.8rem;
+      border: 1.5px solid #e0e0e0;
+      border-radius: 10px;
       font-size: 1.05rem;
-    }
-    input, select {
-      width: 100%;
-      padding: 0.7rem;
-      margin-bottom: 1.1rem;
-      border: 1px solid #e0e0e0;
-      border-radius: 8px;
-      font-size: 1rem;
       background: #f8faff;
-      transition: border 0.2s;
+      transition: border var(--transition), box-shadow var(--transition);
       outline: none;
+      margin-top: 0.2rem;
+      box-sizing: border-box;
     }
-    input:focus, select:focus {
-      border: 1.5px solid #2d8cf0;
+    select:focus, input:focus {
+      border: 1.5px solid var(--main-color);
       background: #f0f6ff;
+      box-shadow: 0 2px 8px #6e8efb22;
     }
-    button {
+    .hijri-fields {
+      display: flex;
+      gap: 8px;
+      margin-top: 0.2rem;
+    }
+    .hijri-fields input {
+      flex: 1;
+      min-width: 0;
+    }
+    button[type="submit"] {
       width: 100%;
-      padding: 0.8rem;
-      background: linear-gradient(90deg, #2d8cf0 60%, #6e8efb 100%);
+      padding: 0.9rem;
+      background: var(--main-gradient);
       color: #fff;
       border: none;
-      border-radius: 8px;
-      font-size: 1.1rem;
-      font-weight: 700;
+      border-radius: 10px;
+      font-size: 1.15rem;
+      font-weight: 800;
       cursor: pointer;
-      box-shadow: 0 2px 8px #2d8cf033;
-      transition: background 0.2s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px #6e8efb33;
+      margin-top: 0.5rem;
       margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+      transition: background 0.2s, box-shadow 0.2s, transform 0.2s;
     }
-    button:hover {
-      background: linear-gradient(90deg, #1766b3 60%, #4e6efb 100%);
-      box-shadow: 0 4px 16px #2d8cf044;
+    button[type="submit"]:hover {
+      background: linear-gradient(120deg, #a777e3 0%, #6e8efb 100%);
+      box-shadow: 0 4px 16px #a777e344;
+      transform: translateY(-2px) scale(1.03);
     }
     .result {
       background: #f0f6ff;
-      padding: 1.2rem 1rem;
-      border-radius: 10px;
-      margin-top: 1.2rem;
+      padding: 1.3rem 1rem;
+      border-radius: 12px;
+      margin-top: 1.3rem;
       text-align: center;
       color: #1a2a3a;
-      font-size: 1.1rem;
-      box-shadow: 0 2px 8px #2d8cf011;
+      font-size: 1.13rem;
+      box-shadow: 0 2px 8px #6e8efb11;
       min-width: 80%;
-      line-height: 2;
+      line-height: 2.1;
+      animation: fadeIn 1s;
     }
-    @media (max-width: 500px) {
-      .container {
-        padding: 1.2rem 0.5rem 1rem 0.5rem;
-        max-width: 98vw;
-      }
-      .result {
-        font-size: 1rem;
-      }
+    .result hr {
+      border: none;
+      border-top: 1.5px dashed #a777e3;
+      margin: 12px 0;
     }
     .ad-box {
       width: 100%;
@@ -125,41 +179,66 @@
       box-shadow: 0 2px 8px #ffd70022;
       text-align: center;
       transition: background 0.2s;
+      margin-top: 2rem;
     }
     .ad-box:hover {
       background: #fff3b0;
     }
+    @media (max-width: 600px) {
+      .container {
+        padding: 1.1rem 0.3rem 1rem 0.3rem;
+        max-width: 99vw;
+      }
+      .result {
+        font-size: 1rem;
+      }
+      header h1 {
+        font-size: 1.3rem;
+      }
+    }
   </style>
+  <!-- أيقونات FontAwesome مجانية -->
+  <script src="https://kit.fontawesome.com/4b7e5b6e8a.js" crossorigin="anonymous"></script>
 </head>
 <body>
-  <div class="container">
+  <header>
     <img class="icon" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="عمر">
-    <h1>حاسبة العمر</h1>
+    <h1>حاسبة العمر بالهجري والميلادي</h1>
+    <p>احسب عمرك بدقة واكتشف تفاصيل مشوقة عن حياتك!</p>
+  </header>
+  <div class="container">
     <form id="ageForm" onsubmit="return false;">
-      <label for="calendarType">نوع التاريخ:</label>
-      <select id="calendarType">
-        <option value="gregorian">ميلادي</option>
-        <option value="hijri">هجري</option>
-      </select>
-      <div id="gregorianInput">
+      <div class="input-group">
+        <label for="calendarType">نوع التاريخ:</label>
+        <span class="input-icon"><i class="fa-solid fa-calendar-days"></i></span>
+        <select id="calendarType">
+          <option value="gregorian">ميلادي</option>
+          <option value="hijri">هجري</option>
+        </select>
+      </div>
+      <div id="gregorianInput" class="input-group">
         <label for="birthDate">تاريخ الميلاد (ميلادي):</label>
+        <span class="input-icon"><i class="fa-solid fa-calendar-plus"></i></span>
         <input type="date" id="birthDate" required>
       </div>
-      <div id="hijriInput" style="display:none;">
+      <div id="hijriInput" class="input-group" style="display:none;">
         <label>تاريخ الميلاد (هجري):</label>
-        <div style="display:flex; gap:6px;">
-          <input type="number" id="hijriYear" min="1200" max="1600" placeholder="سنة" style="flex:2;" required>
-          <input type="number" id="hijriMonth" min="1" max="12" placeholder="شهر" style="flex:1;" required>
-          <input type="number" id="hijriDay" min="1" max="30" placeholder="يوم" style="flex:1;" required>
+        <div class="hijri-fields">
+          <input type="number" id="hijriYear" min="1200" max="1600" placeholder="سنة" required>
+          <input type="number" id="hijriMonth" min="1" max="12" placeholder="شهر" required>
+          <input type="number" id="hijriDay" min="1" max="30" placeholder="يوم" required>
         </div>
+        <span class="input-icon" style="top: 38px;"><i class="fa-solid fa-moon"></i></span>
       </div>
-      <button type="submit">احسب العمر</button>
+      <button type="submit"><i class="fa-solid fa-calculator"></i> احسب العمر</button>
     </form>
     <div class="result" id="result" style="display:none;"></div>
   </div>
   <div class="ad-box" id="adBox">
-    <!-- يمكنك وضع إعلان هنا (نص/صورة/كود AdSense) -->
-    <span>إعلان: احجز مساحتك الإعلانية هنا!</span>
+    <a href="https://wa.me/966591662458" target="_blank" style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;text-decoration:none;color:inherit;">
+      <i class="fa-brands fa-whatsapp" style="font-size:1.6rem;margin-left:10px;"></i>
+      <span>إعلان: تواصل معنا للإعلان عبر الواتساب!</span>
+    </a>
   </div>
   <script>
     // تحويل التاريخ الميلادي إلى هجري (تقريبي)
@@ -270,7 +349,7 @@
       document.getElementById('result').style.display = 'block';
       document.getElementById('result').innerHTML =
         `<b>العمر بالميلادي:</b><br>${ageGregorian.years} سنة، ${ageGregorian.months} شهر، ${ageGregorian.days} يوم<br><br>` +
-        `<b>العمر بالهجري:</b><br>${ageHijri.years} سنة، ${ageHijri.months} شهر، ${ageHijri.days} يوم<br><hr style='margin:10px 0;'>` +
+        `<b>العمر بالهجري:</b><br>${ageHijri.years} سنة، ${ageHijri.months} شهر، ${ageHijri.days} يوم<br><hr>` +
         `<b>لقد عشت حتى الآن:</b><br>` +
         `${daysLived.toLocaleString()} يوم<br>` +
         `${weeksLived.toLocaleString()} أسبوع<br>` +
@@ -278,8 +357,8 @@
         `${hoursLived.toLocaleString()} ساعة<br>` +
         `${minutesLived.toLocaleString()} دقيقة<br><br>` +
         `<b>تقدير كم تبقى من عمرك (متوسط ${avgLife} سنة):</b><br>` +
-        `${yearsLeft} سنة (${daysLeft.toLocaleString()} يوم تقريباً)<br><hr style='margin:10px 0;'>` +
-        `<span style='color:#2d8cf0;font-weight:bold;'>${msg}</span>`;
+        `${yearsLeft} سنة (${daysLeft.toLocaleString()} يوم تقريباً)<br><hr>` +
+        `<span style='color:#6e8efb;font-weight:bold;'>${msg}</span>`;
     });
   </script>
 </body>
