@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حاسبة العمر بالهجري والميلادي</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+  <style>
+    body {
+      font-family: 'Cairo', Arial, sans-serif;
+      background: linear-gradient(135deg, #e0e7ff 0%, #f7f7fa 100%);
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+    .container {
+      background: #fff;
+      padding: 2.5rem 2.5rem 2rem 2.5rem;
+      border-radius: 18px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+      max-width: 370px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: box-shadow 0.2s;
+    }
+    .container:hover {
+      box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.22);
+    }
+    .icon {
+      width: 60px;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 2px 6px #0001);
+    }
+    h1 {
+      color: #2d3a4b;
+      text-align: center;
+      margin-bottom: 1.2rem;
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+    label {
+      display: block;
+      margin-bottom: 0.4rem;
+      color: #3a3a3a;
+      font-weight: 500;
+      font-size: 1.05rem;
+    }
+    input, select {
+      width: 100%;
+      padding: 0.7rem;
+      margin-bottom: 1.1rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 1rem;
+      background: #f8faff;
+      transition: border 0.2s;
+      outline: none;
+    }
+    input:focus, select:focus {
+      border: 1.5px solid #2d8cf0;
+      background: #f0f6ff;
+    }
+    button {
+      width: 100%;
+      padding: 0.8rem;
+      background: linear-gradient(90deg, #2d8cf0 60%, #6e8efb 100%);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 2px 8px #2d8cf033;
+      transition: background 0.2s, box-shadow 0.2s;
+      margin-bottom: 0.5rem;
+    }
+    button:hover {
+      background: linear-gradient(90deg, #1766b3 60%, #4e6efb 100%);
+      box-shadow: 0 4px 16px #2d8cf044;
+    }
+    .result {
+      background: #f0f6ff;
+      padding: 1.2rem 1rem;
+      border-radius: 10px;
+      margin-top: 1.2rem;
+      text-align: center;
+      color: #1a2a3a;
+      font-size: 1.1rem;
+      box-shadow: 0 2px 8px #2d8cf011;
+      min-width: 80%;
+      line-height: 2;
+    }
+    @media (max-width: 500px) {
+      .container {
+        padding: 1.2rem 0.5rem 1rem 0.5rem;
+        max-width: 98vw;
+      }
+      .result {
+        font-size: 1rem;
+      }
+    }
+    .ad-box {
+      width: 100%;
+      max-width: 400px;
+      min-height: 60px;
+      background: #fffbe6;
+      border: 1.5px dashed #ffd700;
+      color: #bfa100;
+      border-radius: 10px;
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      font-weight: 700;
+      box-shadow: 0 2px 8px #ffd70022;
+      text-align: center;
+      transition: background 0.2s;
+    }
+    .ad-box:hover {
+      background: #fff3b0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img class="icon" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="عمر">
+    <h1>حاسبة العمر</h1>
+    <form id="ageForm" onsubmit="return false;">
+      <label for="calendarType">نوع التاريخ:</label>
+      <select id="calendarType">
+        <option value="gregorian">ميلادي</option>
+        <option value="hijri">هجري</option>
+      </select>
+      <div id="gregorianInput">
+        <label for="birthDate">تاريخ الميلاد (ميلادي):</label>
+        <input type="date" id="birthDate" required>
+      </div>
+      <div id="hijriInput" style="display:none;">
+        <label>تاريخ الميلاد (هجري):</label>
+        <div style="display:flex; gap:6px;">
+          <input type="number" id="hijriYear" min="1200" max="1600" placeholder="سنة" style="flex:2;" required>
+          <input type="number" id="hijriMonth" min="1" max="12" placeholder="شهر" style="flex:1;" required>
+          <input type="number" id="hijriDay" min="1" max="30" placeholder="يوم" style="flex:1;" required>
+        </div>
+      </div>
+      <button type="submit">احسب العمر</button>
+    </form>
+    <div class="result" id="result" style="display:none;"></div>
+  </div>
+  <div class="ad-box" id="adBox">
+    <!-- يمكنك وضع إعلان هنا (نص/صورة/كود AdSense) -->
+    <span>إعلان: احجز مساحتك الإعلانية هنا!</span>
+  </div>
+  <script>
+    // تحويل التاريخ الميلادي إلى هجري (تقريبي)
+    function gregorianToHijri(gy, gm, gd) {
+      var jd = (1461 * (gy + 4800 + (gm - 14) / 12)) / 4 + (367 * (gm - 2 - 12 * ((gm - 14) / 12))) / 12 - (3 * ((gy + 4900 + (gm - 14) / 12) / 100)) / 4 + gd - 32075;
+      var l = jd - 1948440 + 10632;
+      var n = Math.floor((l - 1) / 10631);
+      l = l - 10631 * n + 354;
+      var j = (Math.floor((10985 - l) / 5316)) * (Math.floor((50 * l) / 17719)) + (Math.floor(l / 5670)) * (Math.floor((43 * l) / 15238));
+      l = l - (Math.floor((30 - j) / 15)) * (Math.floor((17719 * j) / 50)) - (Math.floor(j / 16)) * (Math.floor((15238 * j) / 43)) + 29;
+      var hm = Math.floor((24 * l) / 709);
+      var hd = l - Math.floor((709 * hm) / 24);
+      var hy = 30 * n + j - 30;
+      return { hy: hy, hm: hm, hd: hd };
+    }
+    function hijriToGregorian(hy, hm, hd) {
+      var jd = Math.floor((11 * hy + 3) / 30) + 354 * hy + 30 * hm - Math.floor((hm - 1) / 2) + hd + 1948440 - 385;
+      var l = jd + 68569;
+      var n = Math.floor((4 * l) / 146097);
+      l = l - Math.floor((146097 * n + 3) / 4);
+      var i = Math.floor((4000 * (l + 1)) / 1461001);
+      l = l - Math.floor((1461 * i) / 4) + 31;
+      var j = Math.floor((80 * l) / 2447);
+      var gd = l - Math.floor((2447 * j) / 80);
+      l = Math.floor(j / 11);
+      var gm = j + 2 - 12 * l;
+      var gy = 100 * (n - 49) + i + l;
+      return { gy: gy, gm: gm, gd: gd };
+    }
+    function calculateAge(from, to) {
+      let years = to.getFullYear() - from.getFullYear();
+      let months = to.getMonth() - from.getMonth();
+      let days = to.getDate() - from.getDate();
+      if (days < 0) {
+        months--;
+        days += new Date(to.getFullYear(), to.getMonth(), 0).getDate();
+      }
+      if (months < 0) {
+        years--;
+        months += 12;
+      }
+      return { years, months, days };
+    }
+    // تبديل حقول الإدخال حسب نوع التقويم
+    document.getElementById('calendarType').addEventListener('change', function() {
+      if (this.value === 'gregorian') {
+        document.getElementById('gregorianInput').style.display = '';
+        document.getElementById('hijriInput').style.display = 'none';
+        document.getElementById('birthDate').required = true;
+        document.getElementById('hijriYear').required = false;
+        document.getElementById('hijriMonth').required = false;
+        document.getElementById('hijriDay').required = false;
+      } else {
+        document.getElementById('gregorianInput').style.display = 'none';
+        document.getElementById('hijriInput').style.display = '';
+        document.getElementById('birthDate').required = false;
+        document.getElementById('hijriYear').required = true;
+        document.getElementById('hijriMonth').required = true;
+        document.getElementById('hijriDay').required = true;
+      }
+    });
+    document.getElementById('ageForm').addEventListener('submit', function() {
+      const calendarType = document.getElementById('calendarType').value;
+      let birthDateStr, birthDate, birthHijri, birthGregorian;
+      let today = new Date();
+      let todayHijri = gregorianToHijri(today.getFullYear(), today.getMonth() + 1, today.getDate());
+      let todayGregorian = today;
+      if (calendarType === 'gregorian') {
+        birthDateStr = document.getElementById('birthDate').value;
+        if (!birthDateStr) return;
+        birthDate = new Date(birthDateStr);
+        birthHijri = gregorianToHijri(birthDate.getFullYear(), birthDate.getMonth() + 1, birthDate.getDate());
+        birthGregorian = birthDate;
+      } else {
+        const hy = parseInt(document.getElementById('hijriYear').value);
+        const hm = parseInt(document.getElementById('hijriMonth').value);
+        const hd = parseInt(document.getElementById('hijriDay').value);
+        if (!hy || !hm || !hd) return;
+        const g = hijriToGregorian(hy, hm, hd);
+        birthDate = new Date(g.gy, g.gm - 1, g.gd);
+        birthHijri = { hy, hm, hd };
+        birthGregorian = birthDate;
+      }
+      const ageGregorian = calculateAge(birthGregorian, todayGregorian);
+      const birthHijriDate = new Date(hijriToGregorian(birthHijri.hy, birthHijri.hm, birthHijri.hd).gy, hijriToGregorian(birthHijri.hy, birthHijri.hm, birthHijri.hd).gm - 1, hijriToGregorian(birthHijri.hy, birthHijri.hm, birthHijri.hd).gd);
+      const todayHijriDate = new Date(hijriToGregorian(todayHijri.hy, todayHijri.hm, todayHijri.hd).gy, hijriToGregorian(todayHijri.hy, todayHijri.hm, todayHijri.hd).gm - 1, hijriToGregorian(todayHijri.hy, todayHijri.hm, todayHijri.hd).gd);
+      const ageHijri = calculateAge(birthHijriDate, todayHijriDate);
+      // تفاصيل إضافية
+      const diffMs = todayGregorian - birthGregorian;
+      const daysLived = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+      const weeksLived = Math.floor(daysLived / 7);
+      const monthsLived = ageGregorian.years * 12 + ageGregorian.months;
+      const hoursLived = Math.floor(diffMs / (1000 * 60 * 60));
+      const minutesLived = Math.floor(diffMs / (1000 * 60));
+      // تقدير كم تبقى من عمرك (متوسط 75 سنة)
+      const avgLife = 75;
+      const yearsLeft = Math.max(0, avgLife - ageGregorian.years);
+      const daysLeft = Math.max(0, Math.floor((avgLife * 365.25) - daysLived));
+      // رسالة تحفيزية
+      const messages = [
+        "تذكر أن كل يوم هو فرصة جديدة!",
+        "العمر مجرد رقم، والأهم هو الإنجاز والسعادة.",
+        "استمتع بكل لحظة في حياتك!",
+        "اجعل كل يوم يستحق أن يُذكر.",
+        "الحياة قصيرة، فلا تؤجل أحلامك!"
+      ];
+      const msg = messages[Math.floor(Math.random() * messages.length)];
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('result').innerHTML =
+        `<b>العمر بالميلادي:</b><br>${ageGregorian.years} سنة، ${ageGregorian.months} شهر، ${ageGregorian.days} يوم<br><br>` +
+        `<b>العمر بالهجري:</b><br>${ageHijri.years} سنة، ${ageHijri.months} شهر، ${ageHijri.days} يوم<br><hr style='margin:10px 0;'>` +
+        `<b>لقد عشت حتى الآن:</b><br>` +
+        `${daysLived.toLocaleString()} يوم<br>` +
+        `${weeksLived.toLocaleString()} أسبوع<br>` +
+        `${monthsLived.toLocaleString()} شهر<br>` +
+        `${hoursLived.toLocaleString()} ساعة<br>` +
+        `${minutesLived.toLocaleString()} دقيقة<br><br>` +
+        `<b>تقدير كم تبقى من عمرك (متوسط ${avgLife} سنة):</b><br>` +
+        `${yearsLeft} سنة (${daysLeft.toLocaleString()} يوم تقريباً)<br><hr style='margin:10px 0;'>` +
+        `<span style='color:#2d8cf0;font-weight:bold;'>${msg}</span>`;
+    });
+  </script>
+</body>
+</html> 
